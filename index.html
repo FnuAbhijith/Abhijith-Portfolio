@@ -54,46 +54,178 @@
         color: transparent;
     }
 
-    .skill-card,
-    .project-card {
-        transition: all 0.4s ease;
-        background: #1e293b;
-        color: var(--dark);
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+    .carousel {
+	transform: perspective(1000px) rotateX(70deg);
+	transform-style: preserve-3d;
+	display: grid;
+	place-items: center;
+	animation: rotate 15s linear infinite;
+	background-image: radial-gradient(circle at 50% 50%, #222 30%, transparent 40%);
+	position: relative;
     }
 
-    .skill-card:hover,
-    .project-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 30px -5px rgba(6, 182, 212, 0.3);
+    .carousel:hover {
+        animation-play-state: paused;
     }
 
-    .skill-card::before,
-    .project-card::before {
-        content: '';
+    .card {
+        width: 190px;
+        height: 225px;
+        background-color: #333;
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--gradient);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: -1;
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        display: grid;
+        place-items: center;
+        color: white;
+        -webkit-box-reflect: below 3px linear-gradient(transparent 75%, rgba(255,255,255,0.125));
+        text-align: center;
     }
 
-    .skill-card:hover::before,
-    .project-card:hover::before {
-        opacity: 0.15;
+    .card .img {
+        width: 180px;
+        height: 100px;
+        border-radius: 3px;
+        margin-bottom: -10px;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.7);
     }
 
-    .project-card .project-image {
-        transition: transform 0.5s ease;
+    .card p {
+        font-size: 16px;
+        margin-bottom: -5px;
+    }
+
+    .card span {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    /* Position each card in the carousel */
+    .c1 { transform: rotateZ(0deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c2 { transform: rotateZ(45deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c3 { transform: rotateZ(90deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c4 { transform: rotateZ(135deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c5 { transform: rotateZ(180deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c6 { transform: rotateZ(225deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c7 { transform: rotateZ(270deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+    .c8 { transform: rotateZ(315deg) rotateX(90deg) translateY(120px) translateZ(280px) rotateZ(180deg); }
+
+    @keyframes rotate {
+        to {
+            transform: perspective(1000px) rotateX(70deg) rotateZ(360deg);
+        }
+    }
+
+    /* Responsive scaling */
+    @media screen and (max-width: 992px) {
+        .carousel {
+            transform: scale(0.7) perspective(1000px) rotateX(70deg);
+        }
+    }
+
+    @keyframes wave-animation {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+    }
+
+    .wave {
+    display: inline-block;
+    animation: wave-animation 2.5s infinite;
+    transform-origin: 70% 70%;
+    }
+
+        /* Base styles */
+    .project-card {
+    --angle: 0deg;
+    --duration: 300ms;
+    --img-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    background: #022a3d;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9);
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease;
+    }
+
+    /* Image styling with tilt effect */
+    .project-image {
+    transform: rotate(var(--angle));
+    transition: transform calc(var(--duration) * 2) var(--img-easing);
+    transform-origin: center;
+    }
+
+    /* Hover effects */
+    .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 
     .project-card:hover .project-image {
-        transform: scale(1.05);
+    --angle: 0deg;
+    }
+
+    /* Animation for staggered entry */
+    .animate-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .delay-1 {
+    animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+    animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+    animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+    animation-delay: 0.4s;
+    }
+
+    @keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+
+    /* Tag styling (enhancing your Tailwind classes) */
+    .project-card .bg-blue-100 {
+    transition: all 0.2s ease;
+    }
+
+    .project-card:hover .bg-blue-100 {
+    background-color: #2563eb;
+    color: white;
+    }
+
+    /* GitHub link hover effect */
+    .project-card .text-blue-500:hover {
+    color: #1e40af;
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+    .project-card {
+        --angle: 3deg;
+    }
+    
+    .project-card:nth-child(even) {
+        --angle: -3deg;
+    }
     }
 
     .contact-input {
@@ -176,8 +308,41 @@
     .back-to-top {
         background-color: var(--primary);
     }
-</style>
+    @keyframes morph {
+        0%, 100% { transform: scale(1) rotate(0deg); border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+        50% { transform: scale(1.1) rotate(180deg); border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+        50% { transform: translateY(-30px) translateX(15px) scale(1.1); }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes trail {
+        0%, 100% { opacity: 0.8; filter: blur(0px); }
+        50% { opacity: 0.2; filter: blur(4px); }
+    }
+    @keyframes pulse {
+            0%, 100% { opacity: 0; transform: scale(0.95); }
+            50% { opacity: 0.1; transform: scale(1.05); }
+        }
+    @keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
 
+.animate-slide-in-right {
+  animation: slideInRight 1.2s ease-out forwards;
+}
+</style>
 </head>
 <body class="overflow-x-hidden">
     <!-- Navigation -->
@@ -215,6 +380,7 @@
 
     <!-- Hero Section -->
 <section id="home" class="hero min-h-screen flex items-center pt-20 relative overflow-hidden">
+    <div id="vanta-net-bg" class="absolute inset-0 z-0"></div>
     <div class="absolute inset-0 overflow-hidden">
         <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-100 opacity-20 blur-3xl animate-pulse"></div>
         <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-indigo-100 opacity-20 blur-3xl animate-pulse delay-1000"></div>
@@ -223,7 +389,7 @@
     <div class="container mx-auto px-6 py-20 relative z-10">
         <div class="flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 animate-in">
-                <h1 class="text-4xl md:text-6xl font-bold text-white-800 mb-4">Hi, I'm <span class="gradient-text">Fnu Abhijith</span> <span class="wave">👋</span></h1>
+                <h1 class="text-4xl md:text-5xl font-bold text-white-800 mb-4">Hi, I'm <span class="gradient-text">Fnu Abhijith</span> <span class="wave">👋</span></h1>
                 <h2 class="text-2xl md:text-3xl font-semibold text-white-600 mb-6 typewriter">Data Scientist | Turning Data into Actionable Insights</h2>
                 <p class="text-white-600 mb-8 max-w-lg leading-relaxed">I’m a Data Science graduate student at the University of Memphis, passionate about solving real-world problems with data. I specialize in Python, SQL, machine learning, and data storytelling to drive strategic impact and innovation.</p>
                 <div class="flex space-x-4">
@@ -232,12 +398,16 @@
                     </a>
                 </div>
             </div>
-            <div class="md:w-1/2 mt-10 md:mt-0 animate-in delay-1">
-                <div class="relative max-w-md mx-auto floating">
-                    <div class="absolute -inset-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl opacity-75 blur-xl"></div>
-                    <img src="Hero.jpg" alt="Data Scientist" class="relative rounded-2xl shadow-xl w-full transform transition duration-500 hover:scale-105">
-                </div>
-            </div>
+            <div class="md:w-1/2 mt-10 md:mt-0 animate-slide-in-right">
+  <div class="relative max-w-md mx-auto floating group">
+    <div class="absolute -inset-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl opacity-75 blur-xl transition-all duration-700 group-hover:scale-110 group-hover:blur-lg"></div>
+    <img 
+      src="Hero.jpeg" 
+      alt="Hero Image"
+      class="relative rounded-2xl shadow-2xl border-4 border-white w-full transform transition duration-700 group-hover:scale-105"
+    >
+  </div>
+</div>
         </div>
     </div>
 
@@ -296,93 +466,60 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Image with Glow and Ring -->
             <div class="md:w-1/3 relative flex justify-center">
-                <div class="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-full shadow-xl glow floating">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-100 via-indigo-200 to-purple-200 rounded-full blur-2xl opacity-40 z-0"></div>
-                    <img src="abhijith.jpg" alt="Abhijith" class="relative z-10 w-full h-full object-cover rounded-full border-8 border-white shadow-xl">
-                    <div class="absolute -inset-4 border-4 border-dashed border-blue-300 rounded-full animate-pulse z-[-1]"></div>
-                </div>
-            </div>
+    <div class="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] rounded-full">
+        <!-- Animated gradient background with morphing effect -->
+        <div class="absolute inset-0 rounded-full overflow-hidden z-0">
+            <div class="absolute inset-0 bg-[conic-gradient(at_top_right,#f0abfc_0%,#a5b4fc_25%,#67e8f9_50%,#a5b4fc_75%,#f0abfc_100%)] opacity-40 animate-[morph_12s_ease-in-out_infinite]"></div>
+            <div class="absolute inset-0 bg-[conic-gradient(at_bottom_left,#f0abfc_0%,#a5b4fc_25%,#67e8f9_50%,#a5b4fc_75%,#f0abfc_100%)] opacity-40 animate-[morph_12s_ease-in-out_3s_infinite]"></div>
+        </div>
+
+        <!-- Main image with parallax tilt effect -->
+        <div class="relative z-10 w-full h-full group">
+            <img src="abhijith.jpg" alt="Abhijith" 
+                class="w-full h-full object-cover rounded-full border-8 border-white shadow-xl transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                style="transform-style: preserve-3d; transform: perspective(1000px)">
+        </div>
+
+        <!-- Floating particles animation -->
+        <div class="absolute inset-0 overflow-hidden rounded-full z-0">
+            <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-300 rounded-full opacity-80 animate-[float_8s_ease-in-out_infinite]"></div>
+            <div class="absolute top-1/3 right-1/5 w-3 h-3 bg-purple-300 rounded-full opacity-80 animate-[float_10s_ease-in-out_2s_infinite]"></div>
+            <div class="absolute bottom-1/4 right-1/3 w-1.5 h-1.5 bg-indigo-300 rounded-full opacity-80 animate-[float_12s_ease-in-out_4s_infinite]"></div>
+        </div>
+
+        <!-- Animated border with trail effect -->
+        <div class="absolute -inset-4 rounded-full z-[-1] overflow-hidden">
+            <div class="absolute inset-0 border-4 border-transparent border-t-blue-400 border-r-purple-400 border-b-indigo-400 border-l-pink-400 rounded-full animate-[spin_8s_linear_infinite,trail_3s_ease-in-out_infinite]"></div>
+        </div>
+
+        <!-- Subtle pulsing glow -->
+        <div class="absolute -inset-6 rounded-full bg-blue-200 opacity-0 animate-[pulse_6s_ease-in-out_infinite] z-[-2]"></div>
+    </div>
+</div>
         </div>
     </div>
 </section>
 
     <!-- Skills Section -->
-<section id="skills" class="py-20 bg-gray-50 relative overflow-hidden">
+<section id="skills" class="py-20 bg-gray-1000 relative overflow-hidden">
     <div class="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-indigo-100 opacity-10 blur-3xl -ml-32 -mb-32"></div>
     
     <div class="container mx-auto px-6 relative z-10">
         <div class="text-center mb-16 animate-in">
-            <h2 class="text-3xl text-gray-800 font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">Here are the technologies and tools I work with to build data-driven solutions and insights.</p>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Programming Languages -->
-            <div class="skill-card p-6 rounded-xl animate-in">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fab fa-python"></i></div>
-                <h3 class="text-xl font-semibold mb-2">Python</h3>
-                <p class="text-gray-600">Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 95%"></div></div></div>
-            </div>
-
-            <div class="skill-card p-6 rounded-xl animate-in delay-1">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fas fa-database"></i></div>
-                <h3 class="text-xl font-semibold mb-2">SQL & R</h3>
-                <p class="text-gray-600">Advanced querying & statistical computing</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div></div></div>
-            </div>
-
-            <div class="skill-card p-6 rounded-xl animate-in delay-2">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fab fa-html5"></i></div>
-                <h3 class="text-xl font-semibold mb-2">HTML & CSS</h3>
-                <p class="text-gray-600">Web layout, responsive design, and styling</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 80%"></div></div></div>
-            </div>
-
-            <!-- Data Analysis & Visualization -->
-            <div class="skill-card p-6 rounded-xl animate-in delay-3">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fas fa-chart-line"></i></div>
-                <h3 class="text-xl font-semibold mb-2">Data Analysis & Visualization</h3>
-                <p class="text-gray-600">Data cleaning & Data wrangling, Exploratory data Analysis(EDA), Matplotlib, Seaborn, Tableau, Power BIfeature selection</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div></div></div>
-            </div>
-
-
-
-            <!-- Machine Learning -->
-            <div class="skill-card p-6 rounded-xl animate-in delay-1">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fas fa-robot"></i></div>
-                <h3 class="text-xl font-semibold mb-2">Machine Learning</h3>
-                <p class="text-gray-600">Supervised & Unsupervised Learning, Predictive Modeling, MLP, Random Forest, KNN, Logistic Regression, CNN, Dimensionality Reduction (PCA, RFE), Model Evaluation (ROC-AUC, F1-Score, Precision, Recall)</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div></div></div>
-            </div>
-
-            <!-- Cloud & Big Data -->
-            <div class="skill-card p-6 rounded-xl animate-in delay-3">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fas fa-cloud"></i></div>
-                <h3 class="text-xl font-semibold mb-2">Cloud & Big Data</h3>
-                <p class="text-gray-600">AWS (S3, Lambda, SageMaker), Apache Spark, Snowflake</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div></div></div>
-            </div>
-
-            <!-- Statistics -->
-            <div class="skill-card p-6 rounded-xl animate-in">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fas fa-percent"></i></div>
-                <h3 class="text-xl font-semibold mb-2">Statistics & Math</h3>
-                <p class="text-gray-600">Probability & Distribution, Hypothesis Testing, A/B Testing, Linear Algebra</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div></div></div>
-            </div>
-
-            <!-- Soft Skills -->
-            <div class="skill-card p-6 rounded-xl animate-in delay-1">
-                <div class="skill-icon text-blue-500 text-4xl mb-4"><i class="fas fa-users"></i></div>
-                <h3 class="text-xl font-semibold mb-2">Soft Skills</h3>
-                <p class="text-gray-600">Problem-Solving, Data Storytelling, Communication & Collaboration,Business Understanding</p>
-                <div class="mt-4"><div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div></div></div>
-            </div>
+            <h2 class="text-3xl text-white-800 font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
+            <p class="text-white-600 max-w-2xl mx-auto">Here are the technologies and tools I work with to build data-driven solutions and insights.</p>
+    </div>
+        <div class="carousel relative w-full h-[500px] my-12">
+  <!-- 8 rotating cards -->
+            <div class="card c1"><div class="img" style="background-image: url('https://img-c.udemycdn.com/course/750x422/6095911_7240.jpg')"></div><p>Python</p><span>Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch</span></div>
+            <div class="card c2"><div class="img" style="background-image: url('https://bairesdev.mo.cloudinary.net/blog/2023/10/What-is-SQL-Server.jpg?tx=w_1920,q_auto')"></div><p>SQL</p><span>Advanced querying & statistical computing</span></div>
+            <div class="card c3"><div class="img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVvmUAxakc6dXqdvhWTsu98TArywp7IRKuPGUCb_mSUobfCNm3W_n34oIu-tw2yMTziC0&usqp=CAU')"></div><p>HTML/CSS</p><span>Web layout, responsive design, and styling</span></div>
+            <div class="card c4"><div class="img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMS2DFRjgDSjS3UMMdU0x6MC1dZs0e8Kg6mA&s')"></div><p>ML</p><span style="font-size: 9px;">Supervised & Unsupervised Learning, Predictive Modeling, MLP, Random Forest, KNN, Logistic Regression, CNN, Dimensionality Reduction, Model Evaluation</span></div>
+            <div class="card c5"><div class="img" style="background-image: url('https://swadesqms.com/wp-content/uploads/2022/07/Basic-Statistics.png')"></div><p>Statistics</p><span>Probability & Distribution, Hypothesis Testing, A/B Testing, Linear Algebra</span></div>
+            <div class="card c6"><div class="img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmuNCMPCg02zSA9J436BfjQ-NxY1KDK7dfHw&s')"></div><p>Data Analysis & Visualization</p><span>Data cleaning & Data wrangling, EDA, Matplotlib, Seaborn, Tableau, Power BI</span></div>
+            <div class="card c7"><div class="img" style="background-image: url('https://media.licdn.com/dms/image/v2/D4D12AQFGs6wZo74TOw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1689211651554?e=2147483647&v=beta&t=6RLd_Hrk_I9YG57riFgQMfsBf0thGaNJcaS0jkvwdUo')"></div><p>Soft Skills</p><span>Problem-Solving, Data Storytelling, Communication & Collaboration,Business Understanding</span></div>
+            <div class="card c8"><div class="img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Yqyn6Z8hNSCmtWeiNph9QpEUMqQcXcl7-Q&s')"></div><p>Cloud</p><span>AWS (S3, Lambda, SageMaker), Apache Spark, Snowflake</span></div>
         </div>
     </div>
 </section>
@@ -408,8 +545,8 @@
                     <img src="Android.jpg" alt="Android Malware Detection" class="project-image w-full h-48 object-cover">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Android Malware Detection</h3>
-                    <p class="text-gray-600 mb-4">ML & DL models to classify Android malware using static features. Achieved 99% accuracy and deployed using Flask.</p>
+                    <h3 class="text-xl text-blue-800 font-semibold mb-2">Android Malware Detection</h3>
+                    <p class="text-gray-100 mb-4">ML & DL models to classify Android malware using static features. Achieved 99% accuracy and deployed using Flask.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">MLP</span>
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">TensorFlow</span>
@@ -427,8 +564,8 @@
                     <img src="Municipal-debt.jpg" alt="Municipal Debt Risk Prediction" class="project-image w-full h-48 object-cover">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Municipal Debt Risk Prediction</h3>
-                    <p class="text-gray-600 mb-4">Used real billing data and models like CatBoost and MLP to forecast bad debts. Achieved 100% AUC on validation.</p>
+                    <h3 class="text-xl text-blue-800 font-semibold mb-2">Municipal Debt Risk Prediction</h3>
+                    <p class="text-gray-100 mb-4">Used real billing data and models like CatBoost and MLP to forecast bad debts. Achieved 100% AUC on validation.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">CatBoost</span>
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Scikit-learn</span>
@@ -446,8 +583,8 @@
                     <img src="Credit.jpg" alt="Customer Segmentation" class="project-image w-full h-48 object-cover">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Customer Segmentation</h3>
-                    <p class="text-gray-600 mb-4">Performed clustering on credit card data using KMeans and PCA to identify unique customer segments.</p>
+                    <h3 class="text-xl text-blue-800 font-semibold mb-2">Customer Segmentation</h3>
+                    <p class="text-gray-100 mb-4">Performed clustering on credit card data using KMeans and PCA to identify unique customer segments.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">KMeans</span>
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">EDA</span>
@@ -465,8 +602,8 @@
                     <img src="health.jpg" alt="Cancer Survival Prediction" class="project-image w-full h-48 object-cover">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Cancer Survival Prediction</h3>
-                    <p class="text-gray-600 mb-4">Developed ML models to predict cancer patient survival risk and identify key health features for prognosis.</p>
+                    <h3 class="text-xl text-blue-800 font-semibold mb-2">Cancer Survival Prediction</h3>
+                    <p class="text-gray-100 mb-4">Developed ML models to predict cancer patient survival risk and identify key health features for prognosis.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Logistic Regression</span>
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Random Forest</span>
@@ -484,8 +621,8 @@
                     <img src="climate.jpg" alt="Climate Change Analysis" class="project-image w-full h-48 object-cover">
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2">Climate Temperature Analysis</h3>
-                    <p class="text-gray-600 mb-4">Analyzed long-term climate trends using temperature datasets. Built visual dashboards to interpret shifts.</p>
+                    <h3 class="text-xl text-blue-800 font-semibold mb-2">Climate Temperature Analysis</h3>
+                    <p class="text-gray-100 mb-4">Analyzed long-term climate trends using temperature datasets. Built visual dashboards to interpret shifts.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Data Analysis</span>
                         <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Matplotlib</span>
@@ -501,35 +638,34 @@
 </section>
 
     <!-- Resume Section -->
-<section id="resume" class="py-20 bg-gray-50 relative overflow-hidden">
+<section id="resume" class="py-20 bg-blue-1000 relative overflow-hidden">
     <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-blue-100 opacity-10 blur-3xl -mr-32 -mt-32"></div>
-
     <div class="container mx-auto px-6 relative z-10">
         <div class="text-center mb-16 animate-in">
-            <h2 class="text-3xl text-gray-800 font-bold mb-4">My <span class="gradient-text">Resume</span></h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">My professional journey, education, and skillset in Data Science.</p>
+            <h2 class="text-3xl text-white-800 font-bold mb-4">My <span class="gradient-text">Resume</span></h2>
+            <p class="text-white-50 max-w-2xl mx-auto">My professional journey, education, and skillset in Data Science.</p>
         </div>
 
         <div class="flex flex-col md:flex-row gap-12">
             <!-- Experience -->
             <div class="md:w-1/2 animate-in">
-                <h3 class="text-2xl text-blue-800 font-semibold mb-6 flex items-center">
+                <h3 class="text-2xl text-blue-800  font-semibold mb-6 flex items-center">
                     <i class="fas fa-briefcase mr-3 gradient-text"></i> Experience
                 </h3>
 
                 <div class="relative pl-8 pb-8 timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="mb-8">
-                        <h4 class="text-xl text-gray-800 font-semibold">Data Science Intern</h4>
+                        <h4 class="text-xl text-white-800 font-semibold">Data Science Intern</h4>
                         <p class="gradient-text font-medium mb-2">Teachnook-(Bengaluru,India) • Jan 2023 - Jun 2023</p>
-                        <p class="text-gray-600">Forecasted student performance (85% accuracy) using predictive models (Scikit-learn, XGBoost). Built data pipelines, conducted EDA, and deployed actionable dashboards for marketing and academic teams.</p>
+                        <p class="text-gray-400">Forecasted student performance (85% accuracy) using predictive models (Scikit-learn, XGBoost). Built data pipelines, conducted EDA, and deployed actionable dashboards for marketing and academic teams.</p>
                     </div>
 
                     <div class="timeline-dot"></div>
                     <div>
-                        <h4 class="text-xl text-gray-800 font-semibold">Data Analyst Intern</h4>
+                        <h4 class="text-xl text-white-800 font-semibold">Data Analyst Intern</h4>
                         <p class="gradient-text font-medium mb-2">Brainovision Solutions-(Bengaluru,India) • Sep 2022 - Nov 2022</p>
-                        <p class="text-gray-600">Processed and analyzed student profile data. Developed Tableau dashboards, automated reports with Python and Excel, and supported enrollment strategies that increased participation by 18%.</p>
+                        <p class="text-gray-400">Processed and analyzed student profile data. Developed Tableau dashboards, automated reports with Python and Excel, and supported enrollment strategies that increased participation by 18%.</p>
                     </div>
                 </div>
             </div>
@@ -543,23 +679,23 @@
                 <div class="relative pl-8 pb-8 timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="mb-8">
-                        <h4 class="text-xl text-gray-800 font-semibold">Master of Science in Data Science</h4>
+                        <h4 class="text-xl text-white-800 font-semibold">Master of Science in Data Science</h4>
                         <p class="gradient-text font-medium mb-2">University of Memphis • 2025 • GPA: 3.1</p>
-                        <p class="text-gray-600">Focused on machine learning, big data, and cloud computing. Projects include Android Malware Detection and Municipal Debt Risk Prediction.</p>
+                        <p class="text-gray-400">Focused on machine learning, big data, and cloud computing. Projects include Android Malware Detection and Municipal Debt Risk Prediction.</p>
                     </div>
 
                     <div class="timeline-dot"></div>
                     <div>
-                        <h4 class="text-xl text-gray-800 font-semibold">Bachelor of Engineering in Information Science</h4>
+                        <h4 class="text-xl text-white-800 font-semibold">Bachelor of Engineering in Information Science</h4>
                         <p class="gradient-text font-medium mb-2">Don Bosco Institute of Technology • 2023 • GPA: 3.23</p>
-                        <p class="text-gray-600">Built a strong foundation in algorithms, data structures, and software engineering practices.</p>
+                        <p class="text-gray-400">Built a strong foundation in algorithms, data structures, and software engineering practices.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Skills -->
-        <div class="mt-16 animate-in delay-2">
+        <!-- <div class="mt-16 animate-in delay-2">
             <h3 class="text-2xl text-blue-800 font-semibold mb-6 flex items-center">
                 <i class="fas fa-tools mr-3 gradient-text"></i> Skills
             </h3>
@@ -579,7 +715,7 @@
                     <li><strong>Tools:</strong> Git, Excel Macros, Jupyter Notebook</li>
                 </ul>
             </div>
-        </div>
+        </div> -->
 
         <!-- Download Button -->
         <div class="text-center mt-12 animate-in delay-3">
@@ -603,7 +739,7 @@
 
         <div class="flex flex-col md:flex-row gap-12">
             <!-- Contact Form -->
-                <div class="md:w-1/2 animate-in fade-up bg-white bg-opacity-90 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-200">
+                <div class="md:w-1/2 animate-in fade-up bg-black bg-opacity-90 backdrop-blur-lg p-8 rounded-xl shadow-lg border border-gray-200">
                     <form class="space-y-6">
                         <!-- Name & Email -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -671,7 +807,7 @@
             <!-- Contact Info -->
             <div class="md:w-1/2 animate-in delay-1">
                 <div class="bg-gray-50 p-8 rounded-xl h-full">
-                    <h3 class="text-2xl font-semibold mb-6 gradient-text">Contact Information</h3>
+                    <h3 class="text-2xl text-gray-800 font-semibold mb-6 gradient-text">Contact Information</h3>
 
                     <div class="space-y-6">
                         <div class="flex items-start">
@@ -904,6 +1040,26 @@
                 this.reset();
             });
         }
-    </script>
+    </script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+<script>
+VANTA.NET({
+  el: "#vanta-net-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
+  color: 0xfff33f,
+  backgroundColor: 0x240757,
+  points: 9.00,
+  maxDistance: 25.00,
+  spacing: 17.00
+});
+</script>
 </body>
 </html>
